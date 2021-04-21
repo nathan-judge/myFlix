@@ -68,40 +68,39 @@ export class UserLoginService {
 @Injectable({
   providedIn: 'root',
 })
-export class GetAllMoviesService {
+export class GetAllMovies {
   constructor(private http: HttpClient) { }
 
-  //Making the api call to get all movies
+  // making the API call for the all movies endpoint
   getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies', {
-      headers: new HttpHeaders(
-        {
+    return this.http
+      .get(apiUrl + 'movies', {
+        headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
-        })
-    }).pipe(
-      map(this.extractResponseData),
-      catchError(this.handleError)
-    );
+        }),
+      })
+      .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  // Non-typed response extraction
-  private extractResponseData(res: Response | Object): any {
+  // non-typed response extraction
+  private extractResponseData(res: Object): any {
     const body = res;
     return body || {};
   }
 
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
-      console.error('Some error occurred:', error.error.message);
+      console.error('An error occurred: ', error.error.message);
     } else {
       console.error(
         `Error Status code ${error.status}, ` + `Error body is: ${error.error}`
       );
     }
-    return throwError('Something bad happened; please try again later.');
+    return throwError('Something bad happened. Please try again.');
   }
 }
+
 
 //Get One Movie
 @Injectable({
