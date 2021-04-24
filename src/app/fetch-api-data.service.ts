@@ -12,14 +12,19 @@ const apiUrl = 'https://bigscreen.herokuapp.com/';
 @Injectable({
   providedIn: 'root',
 })
-export class FetchApiDataService {
-  // Inject the HttpClient module to the constructor params
-  // This will provide HttpClient to the entire class, making it available via this.http
+export class UserRegistrationService {
+  /**
+   * Inject the HttpClient module to the constructor params
+   * This will provide HttpClient to the entire class, making it available via this.http
+   * @param http
+   */
   constructor(private http: HttpClient) { }
 
-  // Making the api call for the user registration endpoint
+  /**
+   * Making the api call for the user registration endpoint
+   * @param userDetails
+   */
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
     return this.http
       .post(apiUrl + 'users', userDetails)
       .pipe(catchError(this.handleError));
@@ -36,6 +41,7 @@ export class FetchApiDataService {
     return throwError('Something bad happened; please try again later.');
   }
 }
+
 
 //User Login
 @Injectable({
